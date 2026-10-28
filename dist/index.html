@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta name="description" content="Исследуйте шесть алгоритмов сортировки: пошаговая визуализация, воспроизводимые замеры, графики и история экспериментов.">
+  <title>Лаборатория сортировок</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./concept.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">≋</span><span>ЛАБОРАТОРИЯ<br><strong>СОРТИРОВОК</strong></span></div>
+      <div class="sidebar-caption">ИНТЕРАКТИВНЫЙ ПРАКТИКУМ</div>
+      <nav class="nav" aria-label="Основные разделы">
+        <button class="nav-item active" data-tab="visual"><span class="nav-icon">▥</span><span>Визуализация</span><span class="nav-num">01</span></button>
+        <button class="nav-item" data-tab="experiment"><span class="nav-icon">◫</span><span>Эксперименты</span><span class="nav-num">02</span></button>
+        <button class="nav-item" data-tab="history"><span class="nav-icon">◷</span><span>История</span><span class="nav-num">03</span></button>
+      </nav>
+      <div class="side-note"><span class="side-note-dot"></span><div>Ваша лаборатория<br><small>Данные хранятся в этом браузере</small></div></div>
+      <div class="sidebar-bottom">SORTLAB <span>v1.0</span></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="breadcrumb">ПРАКТИКУМ <span>/</span> <strong id="breadcrumb">ВИЗУАЛИЗАЦИЯ</strong></div><div class="top-actions"><span class="live-dot"></span> ГОТОВО К РАБОТЕ</div></header>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <section id="tab-visual" class="tab">
+        <div class="page-heading"><div><div class="eyebrow"><span>01</span> / ИНТЕРАКТИВНАЯ МОДЕЛЬ</div><h1>Сортировка <em>в движении.</em></h1><p>Соберите массив и проследите каждое сравнение, обмен и запись.</p></div><div class="hero-art" aria-hidden="true"><div class="hero-glow"></div><div class="hero-sculpture"><i style="--n:0;--h:43%"></i><i style="--n:1;--h:74%"></i><i style="--n:2;--h:56%"></i><i style="--n:3;--h:91%"></i><i style="--n:4;--h:66%"></i><i style="--n:5;--h:82%"></i><i style="--n:6;--h:51%"></i></div><div class="hero-floor"></div></div><div class="heading-stamp">6 АЛГОРИТМОВ<br>ОДНА ЛАБОРАТОРИЯ <span>↗</span></div></div>
+        <div class="visual-layout">
+          <section class="panel visual-main">
+            <div class="panel-head"><div><div class="section-kicker">РАБОЧАЯ ОБЛАСТЬ</div><h2>Массив данных</h2></div><div class="demo-controls"><span class="mini-badge" id="visual-count">12 элементов</span><button id="demo-visual" class="button soft">На экран ↗</button></div></div>
+            <div class="controls-row">
+              <label class="field compact"><span>Алгоритм</span><select id="visual-algo"></select></label>
+              <label class="field compact"><span>Скорость</span><select id="visual-speed"><option value="900">Медленно</option><option value="350" selected>Обычно</option><option value="80">Быстро</option><option value="15">Очень быстро</option></select></label>
+              <button id="visual-random" class="button soft">↻ Случайный массив</button><button id="visual-investigate" class="button soft">Исследовать этот массив ↗</button>
+            </div>
+            <label class="field array-field"><span>Ваш массив <small>до 80 чисел, разделитель — пробел или запятая</small></span><div class="inline-input"><input id="visual-input" value="42, 18, 75, 31, 56, 12, 89, 24, 63, 47, 8, 71" aria-label="Числа массива"><button id="visual-apply" class="button dark">Применить</button></div></label>
+            <div class="chart-wrap"><div class="chart-top"><span>СОСТОЯНИЕ МАССИВА</span><span id="visual-position">ШАГ 0 / 0</span></div><div id="bars" class="bars" aria-label="Столбиковая визуализация массива"></div><div class="chart-axis"><span>0</span><span>ИНДЕКС →</span><span id="last-index">11</span></div></div>
+            <div class="legend"><span><i class="legend-dot compare"></i> Сравнение</span><span><i class="legend-dot swap"></i> Обмен / запись</span><span><i class="legend-dot pivot"></i> Опорный элемент</span></div>
+            <div class="player"><button id="visual-reset" class="icon-button" title="Сначала" aria-label="Сначала">⟲</button><button id="visual-prev" class="icon-button" title="Шаг назад" aria-label="Шаг назад">←</button><button id="visual-play" class="button accent">▶ Запуск</button><button id="visual-next" class="icon-button" title="Шаг вперёд" aria-label="Шаг вперёд">→</button><input id="visual-seek" type="range" min="0" max="0" value="0" aria-label="Позиция анимации"></div>
+          </section>
+          <div class="visual-side">
+            <section class="panel code-panel"><div class="panel-head"><div><div class="section-kicker">КОД ОЖИВАЕТ</div><h2>Логика алгоритма</h2></div><span class="code-tag">ПСЕВДОКОД</span></div><div id="pseudo" class="pseudo"></div><p class="code-note">Строка подсвечивается вместе с текущим действием.</p></section>
+            <section class="panel algorithm-info"><div class="section-kicker">СПРАВКА ОБ АЛГОРИТМЕ</div><h2 id="algorithm-title"></h2><p id="algorithm-description"></p><div id="algorithm-facts"></div><details><summary>Что означают термины?</summary><p><b>Сложность</b> описывает рост числа операций при увеличении n. <b>Дополнительная память</b> — память сверх исходного массива. <b>Устойчивость</b> сохраняет порядок элементов с одинаковыми ключами.</p></details></section><section class="panel step-panel"><div class="section-kicker">ЧТО ПРОИСХОДИТ</div><p id="step-text" class="step-text">Выберите алгоритм и нажмите «Запуск».</p><div class="metric-row"><div><strong id="vis-comparisons">0</strong><span>сравнений</span></div><div><strong id="vis-swaps">0</strong><span>обменов</span></div><div><strong id="vis-writes">0</strong><span>записей</span></div></div></section>
+          </div>
+        </div>
+        <section class="panel challenge"><div><div class="section-kicker">УЧЕБНАЯ ЗАДАЧА</div><h2>Конструктор трудного случая</h2><p>Переставляйте столбики перетаскиванием. Набор чисел остаётся прежним. Цель — увеличить число сравнений.</p></div><div class="challenge-actions"><button id="challenge-try" class="button dark">Проверить порядок ↗</button><button id="challenge-shuffle" class="button soft">Случайная перестановка</button></div><div id="challenge-result" class="challenge-result">Результат появится после проверки. Для сортировки выбором число сравнений не зависит от порядка.</div></section>
+      </section>
+      <section id="tab-experiment" class="tab" hidden>
+        <div class="page-heading"><div><div class="eyebrow"><span>02</span> / ВОСПРОИЗВОДИМЫЙ ЭКСПЕРИМЕНТ</div><h1>Проверьте <em>гипотезу.</em></h1><p>Одинаковые данные для каждого алгоритма. Прогрев, повторы, проверка и честное сравнение.</p></div><div class="heading-stamp">ИЗМЕРИТЬ<br>И ОБЪЯСНИТЬ <span>↘</span></div></div>
+        <section class="panel presets-panel"><div class="section-kicker">НАЧНИТЕ С ВОПРОСА</div><h2>Готовые исследования</h2><p>Выберите тему: настройки и гипотеза заполнятся автоматически.</p><div class="preset-actions"><button class="button soft" data-preset="order">Влияет ли порядок?</button><button class="button soft" data-preset="size">Как влияет размер?</button><button class="button soft" data-preset="duplicates">Как влияют повторения?</button></div><p id="preset-question" class="preset-question" aria-live="polite">Выберите исследование или настройте серию самостоятельно.</p></section><div class="experiment-layout">
+          <section class="panel form-panel"><div class="panel-head"><div><div class="section-kicker">НАСТРОЙКИ СЕРИИ</div><h2>План эксперимента</h2></div><span class="mini-badge">ШАГ 1 / 3</span></div>
+            <div class="form-block"><div class="form-label">АЛГОРИТМЫ <small>выберите один или несколько</small></div><div id="algo-options" class="option-grid"></div></div>
+            <div class="form-block"><div class="form-label">РАЗМЕРЫ МАССИВА</div><div id="size-options" class="chips"></div><label class="field custom-size"><span>Другие размеры, через запятую</span><input id="custom-sizes" placeholder="например: 200, 2000"></label></div>
+            <div class="form-block"><div class="form-label">ТИП ИСХОДНЫХ ДАННЫХ</div><div id="case-options" class="chips"></div><label class="field" id="custom-array-wrap" hidden><span>Свой массив</span><textarea id="custom-array" rows="2" placeholder="5, 2, 9, 1"></textarea></label></div>
+            <div class="settings-grid"><label class="field"><span>Seed</span><input id="seed" type="number" value="2026" step="1"></label><label class="field"><span>Повторов</span><input id="repeats" type="number" value="5" min="3" max="15"></label><label class="field"><span>Лимит / комбинация, с</span><input id="limit" type="number" value="5" min="1" max="30"></label><label class="field"><span>Диапазон значений</span><div class="range-pair"><input id="value-min" type="number" value="-999" aria-label="Минимум"><input id="value-max" type="number" value="999" aria-label="Максимум"></div></label><label class="field"><span>Перестановок в почти отсортированном</span><input id="nearly-swaps" type="number" value="4" min="1"></label><label class="field"><span>Различных значений с повторами</span><input id="distinct" type="number" value="5" min="1"></label></div>
+            <label class="field hypothesis"><span>Гипотеза перед запуском</span><textarea id="hypothesis" rows="3" placeholder="Например: на отсортированном массиве пузырьковая сортировка завершится раньше…"></textarea></label>
+            <div class="form-actions"><button id="run" class="button accent wide">▶ Запустить серию</button><button id="cancel" class="button soft" hidden>Остановить</button></div><div id="progress" class="progress" hidden><div class="progress-track"><span id="progress-bar"></span></div><p id="progress-text">Подготовка…</p></div>
+            <p class="help-text">Каждый результат проверяется сравнением с числовой эталонной сортировкой. Копирование, генерация и проверка не входят в измеряемое время.</p>
+          </section>
+          <div class="results-column">
+            <section class="panel results-intro"><div class="section-kicker">РЕЗУЛЬТАТЫ СЕРИИ</div><h2 id="results-title">Здесь появятся измерения</h2><p id="results-summary">Выберите параметры и запустите эксперимент. Сравнения будут выполнены на одинаковых исходных массивах.</p><details class="run-details"><summary>Подробные параметры</summary><p id="run-config" class="run-config"></p></details><div class="result-actions"><button id="export-csv" class="button soft" disabled>↓ CSV</button><button id="export-json" class="button soft" disabled>↓ JSON</button><button id="export-png" class="button soft" disabled>↓ График PNG</button><button id="export-report" class="button soft" disabled>Отчёт / PDF ↗</button><button id="repeat-settings" class="button soft" disabled>Повторить с этими настройками</button></div></section>
+            <section class="panel observations-panel"><div class="section-kicker">НАБЛЮДЕНИЯ</div><h2>Что показала серия?</h2><ul id="observations"><li>Запустите эксперимент, чтобы увидеть наблюдения.</li></ul><p>Объясните возможные причины в выводе ниже. Перекрытие Q1–Q3 не доказывает равенство результатов.</p></section><section class="panel chart-panel"><div class="panel-head"><div><div class="section-kicker">ЛАБОРАТОРИЯ СЛОЖНОСТИ</div><h2>Размер → показатель</h2></div><button id="demo-chart" class="button soft">На экран ↗</button><select id="chart-metric" aria-label="Показатель графика"><option value="time">Время</option><option value="comparisons">Сравнения</option><option value="writes">Записи</option><option value="swaps">Обмены</option></select></div><div class="chart-controls"><label>Тип массива <select id="chart-case"></select></label><label>Размер <select id="chart-size" aria-label="Размер для сравнения"></select></label><label>Вид <select id="chart-view"><option value="line">Линии по размерам</option><option value="bar">Столбцы для размера</option></select></label><label>Масштаб <select id="chart-scale"><option value="linear">Линейный</option><option value="log">Логарифмический</option></select></label><span id="chart-caption">Медиана и межквартильный разброс</span></div><div id="line-chart" class="line-chart empty-chart">График появится после эксперимента</div><div id="chart-legend" class="chart-legend" aria-label="Видимость алгоритмов"></div><p class="help-text">Нажмите на название алгоритма, чтобы скрыть или показать его. Нажмите на точку или столбец для подробностей.</p><div id="chart-detail" class="chart-detail" role="status" aria-live="polite">Выберите точку или столбец на графике.</div><p id="chart-scale-note" class="chart-scale-note">Наведите на точку, чтобы увидеть точное значение.</p><div id="growth" class="growth-note"></div></section>
+            <section class="panel heat-panel"><div class="panel-head"><div><div class="section-kicker">ТЕПЛОВАЯ КАРТА</div><h2>Кто быстрее?</h2></div><span class="mini-badge">ОТНОСИТЕЛЬНО ЛУЧШЕГО</span></div><div id="heatmap" class="heatmap empty-chart">Тепловая карта появится после эксперимента</div><p class="help-text">Цвет показывает отношение к самому быстрому алгоритму при данном размере. Перекрывающийся разброс помечен знаком ≈.</p></section>
+            <section class="panel table-panel"><div class="panel-head"><div><div class="section-kicker">ПРОТОКОЛ ИЗМЕРЕНИЙ</div><h2>Все результаты</h2></div></div><div class="table-scroll"><table><thead><tr><th>Алгоритм</th><th>Массив</th><th>n</th><th>Время, мс</th><th>Разброс Q1–Q3</th><th>Сравнения</th><th>Записи</th><th>Статус</th></tr></thead><tbody id="results-body"><tr><td colspan="8" class="empty-cell">Нет данных</td></tr></tbody></table></div></section>
+            <section class="panel conclusion-panel"><div class="section-kicker">ШАГ 3 / ВЫВОД</div><label class="field"><span>Что показал эксперимент?</span><textarea id="conclusion" rows="3" placeholder="Сопоставьте результат с гипотезой и объясните различия…"></textarea></label><button id="save-conclusion" class="button dark" disabled>Сохранить вывод</button> <span id="conclusion-status" class="save-status" role="status"></span><p>График отражает поведение конкретных реализаций в вашем браузере и сам по себе не доказывает асимптотическую сложность.</p></section>
+          </div>
+        </div>
+      </section>
+      <section id="tab-history" class="tab" hidden>
+        <div class="page-heading"><div><div class="eyebrow"><span>03</span> / АРХИВ ИССЛЕДОВАНИЙ</div><h1>История <em>экспериментов.</em></h1><p>Возвращайтесь к сериям, сравнивайте настройки и выгружайте данные для отчёта.</p></div><div class="heading-stamp">СОХРАНЕНО<br>ЛОКАЛЬНО <span>↘</span></div></div>
+        <section class="panel history-panel"><div class="panel-head"><div><div class="section-kicker">СОХРАНЁННЫЕ СЕРИИ</div><h2>Ваши исследования</h2></div><div class="history-actions"><button id="history-import" class="button soft">↑ Импорт JSON</button><input id="history-file" type="file" accept=".json,application/json" hidden></div></div><p id="history-capacity" class="help-text"></p><div id="undo-delete" hidden><span>Серия удалена. </span><button id="undo-delete-button" class="button soft">Отменить удаление</button></div><div id="history-list" class="history-list"><div class="empty-history">Пока нет сохранённых экспериментов.</div></div></section>
+        <section class="panel compare-panel"><div class="panel-head"><div><div class="section-kicker">СРАВНЕНИЕ СЕРИЙ</div><h2>Выбранные запуски</h2></div></div><div id="compare-list" class="compare-list">Отметьте две или более серии в истории, чтобы сравнить их медианные времена.</div></section>
+        <p class="history-footnote">История привязана к этому браузеру и может исчезнуть после очистки данных сайта. Экспортируйте JSON для восстановления.</p>
+      </section>
+      <footer class="footer"><span>ЛАБОРАТОРИЯ СОРТИРОВОК · 2026</span><span>Экспериментируйте. Проверяйте. Объясняйте.</span></footer>
+    </main>
+  </div>
+  <dialog id="demo-dialog" class="demo-dialog" aria-label="Режим демонстрации"><div class="demo-toolbar"><strong>Режим демонстрации</strong><button id="demo-close" class="button soft">Выйти из режима</button></div><div id="demo-content"></div></dialog>
+  <script src="./core.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
